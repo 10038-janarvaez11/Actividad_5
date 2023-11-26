@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/estilos.css">
+</head>
+<body>
+
+<!-- Definición de componentes modulares -->
+<script>
+  // Funciones para crear componentes
+  function createHeaderComponent() {
+    const header = document.createElement('div');
+    header.innerHTML = `
+      <h2>Encabezado</h2>
+      <h1 id="header">Usuario</h1>
+      <p id="nameEmail"></p>`;
+    return header;
+  }
+
+  function createListComponent() {
+    const list = document.createElement('div');
+    list.innerHTML = `
+      <h2>Lista</h2>
+      <h2 id="list">Usuarios ingresados</h2>
+      <ul id="listItems"></ul>`;
+    return list;
+  }
+
+  function createFormComponent() {
+    const form = document.createElement('div');
+    form.innerHTML = `
+      <h2>Formulario</h2>
+      <form id="myForm">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre">
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+        
+        <button type="submit">Enviar</button>
+      </form>`;
+    
+    // Agregar evento al formulario
+    form.querySelector('#myForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Evitar el envío por defecto del formulario
+
+      // Obtener los valores de nombre y email
+      const nombre = document.getElementById('nombre').value;
+      const email = document.getElementById('email').value;
+
+      // Actualizar el contenido del encabezado y la lista con los valores ingresados
+      document.getElementById('header').innerText = `Hola, ${nombre} (${email})`;
+      document.getElementById('nameEmail').innerText = `Nombre: ${nombre}, Email: ${email}`;
+
+      const listItems = document.getElementById('listItems');
+      const listItem = document.createElement('li');
+      listItem.innerText = `${nombre} - ${email}`;
+      listItems.appendChild(listItem);
+
+      // Limpiar los campos del formulario
+      document.getElementById('nombre').value = '';
+      document.getElementById('email').value = '';
+    });
+
+    return form;
+  }
+
+  // Crear componentes
+  const headerComponent = createHeaderComponent();
+  const listComponent = createListComponent();
+  const formComponent = createFormComponent();
+
+  // Componente contenedor
+  const containerComponent = document.createElement('div');
+  containerComponent.appendChild(headerComponent);
+  containerComponent.appendChild(listComponent);
+  containerComponent.appendChild(formComponent);
+
+  // Agregar contenedor al DOM
+  document.body.appendChild(containerComponent);
+</script>
+
+</body>
+</html>
